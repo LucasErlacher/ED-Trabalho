@@ -127,7 +127,7 @@ void inserir_index(lista* list, void* elem, int index){
 void remover_final(lista* list){
 	nodo *end = list->end;
 	list->end = end->prev;
-	//free(end->elem);
+	free(end->elem);
 	free(end);
 	(list->end)->next = NULL;
 	return;
