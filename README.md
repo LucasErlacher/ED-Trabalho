@@ -1,3 +1,7 @@
+﻿# Estrutura de Dados
+
+Este é o repositório de desenvolvimento do trabalho de Estrutura de Dados. IFES - Serra 2017
+
 Uma empresa que fabrica rolamentos possui maquinarios para
 produzi-los, requisicoes de pedidos e um tecnico para consertar quando
 uma maquina quebra. O processo dela funcionar eh o seguinte:
