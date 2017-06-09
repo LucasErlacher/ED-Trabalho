@@ -1,100 +1,62 @@
-﻿# Estrutura de Dados
+# Estrutura de Dados
 
 Este é o repositório de desenvolvimento do trabalho de Estrutura de Dados. IFES - Serra 2017
 
-Uma empresa que fabrica rolamentos possui maquinarios para
-produzi-los, requisicoes de pedidos e um tecnico para consertar quando
-uma maquina quebra. O processo dela funcionar eh o seguinte:
-chega um pedido de um rolamento especifico, podendo ser cilindrico,
-conico, esferico de aco ou de titanio.
+Uma Fábrica de Rolamentos atende a pedidos por meio de processos envolvendo um conjunto de máquinas. A fábrica
+é capaz de produzir rolamentos de quatro tipos: cilíndrico, cônico, esférico de aço ou esférico de titânio. Para cada
+tipo de rolamento, há uma prioridade e um processo ser seguido (envolvendo a ordem e o tempo nas máquinas).
 
-cada rolamento tem uma ordem a ser seguida nas maquinas e um tempo pra
-ficar la dentro sendo processada, alem de uma prioridade especifica
-pra cada pedido. por isso, as maquinas possuem filas de prioridade
-aonde os pedidos vao ficando a medida que vao requisitando seu uso.
-somente depois de sair da ultima maquina que o pedido deveria ficar,
-eh que finalmente o pedido fica pronto.
+Os pedidos possuem as seguintes prioridades: cilíndrico: 1 (mínima); cônico: 2; esféricos: 3 (máxima). Os pedidos de
+rolamentos esféricos são 90% das vezes de aço e somente 10% das vezes de titânio.
 
-Um rolamento cilindrico possui prioridade 1, o conico possui prioridade
-2, e esferico prioridade 3. Quanto maior o numero, mais urgente eh o pedido.
+A empresa conta hoje com quatro máquinas: 1 Fresa, 1 Mandril e 2 Tornos. Os pedidos chegam às máquinas por meio
+de 3 Filas de Prioridade, uma para cada tipo de equipamento.
 
-a media de chegada de um pedido de rolamento cilindrico eh de 21.5 ,
-de um conico 19.1 e de um esferico 8.0.
+A fábrica consegue determinar antecipadamente quando o próximo pedido de cada tipo de rolamento vai chegar
+(função chegadaPedido(param)) para se preparar melhor para a sua produção. No momento em que um pedido
+chega, ele é encaminhado para a fila correspondente à primeira máquina de seu processo. Após percorrer a fila
+(considerando sua prioridade), o pedido é enviado para a máquina, que exige um tempo de processamento (função
+genérica tempoMaquina()). Após ser processado na primeira máquina, o pedido segue para a fila da próxima
+máquina, e assim por diante, conforme seu processo. Ao ser processado pela última máquina, o pedido é considerado
+entregue e seu tempo total de processamento é contabilizado.
 
-a ordem do maquinario para um rolamento cilindrico eh TORNO,FRESA,TORNO,MANDRIL.
-a ordem do maquinario para um rolamento conico eh TORNO,MANDRIL,TORNO.
-a ordem do maquinario para um rolamento esferico de aco eh FRESA,MANDRIL,TORNO.
-a ordem do maquinario para um rolamento esferico de titanio eh FRESA,MANDRIL,TORNO,FRESA,TORNO.
+A tabela a seguir apresenta os parâmetros do processo. Para cada rolamento, são mostrados: a sua prioridade, o
+parâmetro de tempo de chegada do pedido, e os equipamentos utilizados em sua fabricação, na ordem, com os
+respectivos parâmetros de tempo de processamento.
 
-o tempo de estadia no mandril eh 1.2 , 2.1 , 1.4 e 1.5 para
-cilindrico, conico, aco e titanio, respectivamente.
+<img src="#"> </img>
 
-o tempo de estadia na fresa eh 0.5 , 0.5 e 0.6 para cilindrico, aco e
-titanio, respectivamente.
+Seu objetivo é desenvolver um programa em C que simule a fábrica, usando os dados definidos anteriormente e
+recebendo como argumento de entrada um double que representará o tempo de simulação total da fábrica. Este não
+é “tempo real”, mas uma simulação, controlada pelo seu programa. A cada rolamento finalizado, o programa deve
+imprimir o seu tipo e o seu tempo total de processamento (incluindo esperas). Ao final, o programa deve imprimir um
+resumo, indicando, para cada tipo de rolamento, a quantidade produzida e o seu tempo médio de construção.
 
-o tempo de estadia no torno eh 0.8 , 1.8 , 1.0 e 1.6 para cilindrico,
-conico, aco e titanio, respectivamente.
+Para auxiliar a simulação: no primeiro instante a fábrica é informada da chegada dos 3 primeiros pedidos (um de cada
+tipo de rolamento). Sempre que um pedido chega (seu momento de chegada é atingindo), ele é colocado na fila
+correspondente ao seu processo e um novo pedido do mesmo tipo é informado. A fábrica somente entregará os
+pedidos produzidos dentro do tempo passado como argumento.
 
-entao resumindo tudo:
+O programa deve ser bem modularizado (desenvolva bibliotecas usando .c e .h) e utilizar as estruturas de dados
+adequadas. Ponteiros para dados e funções devem ser utilizados conforme pertinência. Crie constantes (#define) para
+os parâmetros da tabela. Evite variáveis globais.
 
-Estadia_Mandril_Cilindrico 1.2
-Estadia_Fresa_Cilindrico 0.5
-Estadia_Torno_Cilindrico 0.8
+A função chegadaPedido(param) retorna o tempo que de demora para chegar um pedido, passando como
+argumento o parâmetro correto (21.5, 19.1 ou 8.1).
 
-Estadia_Mandril_Conico 2.1
-Estadia_Torno_Conico 1.8
+/* Gera o tempo de chegada de um novo pedido */
+float chegadaPedido(float param) {
+	float u=0;
+	do {
+		u = (float) (rand()%RAND_MAX) / RAND_MAX;
+	} while ((u==0) || (u==1));
+		return (float) (-param * log (u));
+	}
 
-Estadia_Mandril_Esferico_Aco 1.4
-Estadia_Fresa_Esferico_Aco 0.5
-Estadia_Torno_Esferico_Aco 1.0
+A função tempoMaquina() é genérica e deve ser implementada de forma a atender cada combinação de rolamento /
+máquina. EstadiaEquipamentoRolamento é uma das constantes definidas a partir da tabela.
 
-Estadia_Mandril_Esferico_Titanio 1.5
-Estadia_Fresa_Esferico_Titanio 0.6
-Estadia_Torno_Esferico_Titanio 1.6
-
-Chegada_Media_Cilindrico 21.5
-Chegada_Media_Conico 19.1
-Chegada_Media_Esferico 8.0
-
-Frequencia_Quebra_Mandril 1.0
-Frequencia_Quebra_Fresa 0.5
-Frequencia_Quebra_Torno 3.0
-
-Tempo para consertar maquinas 20.0
-
-sequencia_cilindrica eh TORNO,FRESA,TORNO,MANDRIL
-sequencia_conica eh TORNO,MANDRIL,TORNO
-sequencia_esferica_titanio eh FRESA,MANDRIL,TORNO,FRESA,TORNO
-sequencia_esferica_aco eh FRESA,MANDRIL,TORNO
-
-Seu objetivo eh fazer um simulador dessa empresa que usando todos os
-dados definidos anteriormente e recebendo como argumento de entrada do
-programa C um double que representará o tempo de simulacao total,
-imprima na tela quantos rolamentos foram construidos de cada tipo e o
-tempo medio de construcao de cada tipo. ps: faca o simulador dividindo
-tudo em bibliotecas [ ou seja, varias , varios arquivos, etc. ] , faca 
-pouco a pouco, juntar tudo de vez certamente baguncará sua cabeca e 
-colocara ainda mais dificuldade na hora de debugar.
-
-a funcao gera_exponencial abaixo retorna o tempo que vai demorar para
-chegar outro pedido, passando como argumento a media de chegada do
-pedido que voce quer saber.
-
-float Gera_Exponencial (float avg)
-{
-    float u=0; /* Gera randomicamente um numero entre 0 e 1 */
-    do u = (new random().nextFloat());
-        while ((u==0) || (u==1));
-    return (-avg * log (u));
+/* Retorna o tempo de processamento em uma máquina específica. */
+float tempoMaquina() {
+	return 2.0 * <EstadiaEquipamentoRolamento> * rand() / (RAND_MAX + 1.0);
 }
-
-para saber quanto tempo o rolamento vai ficar no maquinario, use a funcao abaixo:
-2.0 * Estadia_Equipamento_Rolamento * new random().nextFloat()
-
-PS: deve ser utilizado fila e lista nesse problema, [fila de prioridade] , structs,
-alem de TADs. Flags nao serao aceitos, usem DEFINE para simular as prioridades.
-Ponteiro para funcao será necessario em praticamente todas structs para nao ter que
-saber qual tipo que foi passado e somente precisar saber em tempo real.
-
-
-
