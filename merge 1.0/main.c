@@ -23,7 +23,7 @@ int main(int argc,char **argv){
 	
 	print_lista(l);
 	
-	remover_final(l);
+	remover_start(l);
 	
 	print_lista(l);
 	return 0;

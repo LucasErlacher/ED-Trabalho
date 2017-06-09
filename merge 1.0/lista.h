@@ -11,7 +11,7 @@ typedef struct lista
 
 /* Inicio Criação da lista */
 lista* criar_lista();
-/* Inicio Criação da lista */
+/* Fim Criação da lista */
 
 /* Inicio Consulta */
 int get_size(lista *lst);
@@ -21,11 +21,13 @@ nodo* get_nodo_index(lista* list, int index);
 
 /* Inicio Adicionar Elementos */
 void inserir_start(lista* list, void* elem);
-void inserir(lista* list, void* elem);
 void inserir_index(lista* list, void* elem, int index);
+void inserir(lista* list, void* elem);
 /* Fim Adicionar Elementos */
 
 /* Inicio Remover Elementos */
+void remover_start(lista* list);
+void remover_index(lista* list, int pos);
 void remover_final(lista* list);
 /* Fim Remover Elementos */
 

@@ -136,3 +136,17 @@ void remover_final(lista* list){
 	(list->size)--;
 	return;
 }
+
+/*
+	Remove ultimo elemento da lista
+*/
+void remover_start(lista* list){
+	nodo *start = list->start; // Pega primeiro elemento
+	
+	list->start = start->next; // Seta Elemento seguinte como primeiro elemento
+	free(start);
+
+	(list->start)->prev = NULL; // Seta anterior do novo primeiro elemento como NULL
+	(list->size)--;
+	return;
+}
