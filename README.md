@@ -24,7 +24,7 @@ A tabela a seguir apresenta os parâmetros do processo. Para cada rolamento, sã
 parâmetro de tempo de chegada do pedido, e os equipamentos utilizados em sua fabricação, na ordem, com os
 respectivos parâmetros de tempo de processamento.
 
-<img src="#"> </img>
+<img align="center" src="https://github.com/objetovazio/ED-Trabalho/blob/master/Tabela.PNG"> </img>
 
 Seu objetivo é desenvolver um programa em C que simule a fábrica, usando os dados definidos anteriormente e
 recebendo como argumento de entrada um double que representará o tempo de simulação total da fábrica. Este não
@@ -44,14 +44,15 @@ os parâmetros da tabela. Evite variáveis globais.
 A função chegadaPedido(param) retorna o tempo que de demora para chegar um pedido, passando como
 argumento o parâmetro correto (21.5, 19.1 ou 8.1).
 
-/* Gera o tempo de chegada de um novo pedido */
-float chegadaPedido(float param) {
-	float u=0;
-	do {
-		u = (float) (rand()%RAND_MAX) / RAND_MAX;
-	} while ((u==0) || (u==1));
-		return (float) (-param * log (u));
-	}
+/* Gera o tempo de chegada de um novo pedido */<br>
+float chegadaPedido(float param) {<br>
+	float u=0;<br>
+	do {<br>
+		u = (float) (rand()%RAND_MAX) / RAND_MAX;<br>
+	} while ((u==0) || (u==1));<br>
+		return (float) (-param * log (u));<br>
+	}<br>
+}
 
 A função tempoMaquina() é genérica e deve ser implementada de forma a atender cada combinação de rolamento /
 máquina. EstadiaEquipamentoRolamento é uma das constantes definidas a partir da tabela.
