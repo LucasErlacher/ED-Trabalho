@@ -31,8 +31,7 @@ int main(int argc,char **argv){
 		print_lista(l);
 	}
 	
-<<<<<<< HEAD
-=======
+
 	print_lista(l);
 	
 	destruir_lista(l);
@@ -41,7 +40,6 @@ int main(int argc,char **argv){
 	
 	printf("end");
 	
->>>>>>> 1833cf740ce1e52b8a062c9b4c6b6182301d89ee
 	return 0;
 }
 

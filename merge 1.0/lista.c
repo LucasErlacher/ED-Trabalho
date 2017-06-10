@@ -135,7 +135,7 @@ int remover_final(lista* list){
 	nodo *end = list->end;
 	
 	list->end = end->prev;
-	free(end->elem); // Só dar free no elemento caso seja um ponteiro!
+	//free(end->elem); // Só dar free no elemento caso seja um ponteiro!
 	free(end);
 	
 	if(list->end != NULL){ // Só seta caso a lista ainda tenha elementos
@@ -164,7 +164,6 @@ int remover_start(lista* list){
 	}
 	
 	(list->size)--;
-<<<<<<< HEAD
 	
 	return 1;
 }
@@ -196,9 +195,7 @@ void funcao_in_index(lista* list, int index, funcao do_func)
   
   do_func(current->elem);
 }
-=======
-	return;
-}
+
 
 /*
 	Remove o elemento no index enviado como parametro
@@ -229,7 +226,8 @@ void remover_index(lista* list, int index){
 void destruir_lista(lista* list){
 	nodo *current = list->start;
 	
-	for(int i = 0; i < get_size(list); i++){
+	int i;
+	for(i = 0; i < get_size(list); i++){
 		if (current->next == NULL){
 			list->end = list->start = NULL; //Seta os valores do início e fim para NULL
 			free(current);
@@ -245,4 +243,4 @@ void destruir_lista(lista* list){
 	
 	return;
 }
->>>>>>> 1833cf740ce1e52b8a062c9b4c6b6182301d89ee
+

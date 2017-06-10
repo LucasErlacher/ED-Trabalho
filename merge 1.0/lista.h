@@ -31,17 +31,14 @@ void remover_index(lista* list, int pos);
 int remover_final(lista* list);
 /* Fim Remover Elementos */
 
-<<<<<<< HEAD
 /* Inicio Função Genérica - Ponteiro pra função */
 typedef void (*funcao)(void*);
 void funcao_in_lista(lista* llist, funcao do_func); // Executa uma função na lista inteira
 void funcao_in_index(lista* llist, int index, funcao do_func); // Executa uma função em um nodo específico
 /* Fim Função Genérica */
 
-=======
 /* Início destruir toda a lista */
 void destruir_lista(lista* list);
 /* Fim destruir toda a lista*/
->>>>>>> 1833cf740ce1e52b8a062c9b4c6b6182301d89ee
 
 #endif
