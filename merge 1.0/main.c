@@ -8,7 +8,7 @@ void print_lista(lista *list){
 	for(i = 0; i < get_size(list); i++){
 		printf("%d ", get_index(list, i));
 	}
-	printf("\n");
+	printf("-\n");
 }
 
 int main(int argc,char **argv){
@@ -31,6 +31,17 @@ int main(int argc,char **argv){
 		print_lista(l);
 	}
 	
+<<<<<<< HEAD
+=======
+	print_lista(l);
+	
+	destruir_lista(l);
+	
+	print_lista(l);
+	
+	printf("end");
+	
+>>>>>>> 1833cf740ce1e52b8a062c9b4c6b6182301d89ee
 	return 0;
 }
 
