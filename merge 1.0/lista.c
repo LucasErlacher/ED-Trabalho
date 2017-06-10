@@ -105,7 +105,7 @@ void inserir(lista* list, void* elem){
 }
 
 /*
-	Insere elemento no index enviado como paramentro
+	Insere elemento no index enviado como parametro
 */
 void inserir_index(lista* list, void* elem, int index){
 	if(index == 0) inserir_start(list, elem); // Caso index seja 0, usa a função insere_start
@@ -127,26 +127,71 @@ void inserir_index(lista* list, void* elem, int index){
 /*
 	Remove ultimo elemento da lista
 */
-void remover_final(lista* list){
+int remover_final(lista* list){
+	if(!list->size){
+		return 0; // Em caso de falha
+	}
+	
 	nodo *end = list->end;
+	
 	list->end = end->prev;
-	//free(end->elem);
+	free(end->elem); // Só dar free no elemento caso seja um ponteiro!
 	free(end);
-	(list->end)->next = NULL;
+	
+	if(list->end != NULL){ // Só seta caso a lista ainda tenha elementos
+		(list->end)->next = NULL;	
+	}
+	
 	(list->size)--;
-	return;
+	return 1; // Em caso de sucesso 
 }
 
 /*
 	Remove ultimo elemento da lista
 */
-void remover_start(lista* list){
+int remover_start(lista* list){
+	if(!list->size){
+		return 0; // Em caso de falha
+	}
+	
 	nodo *start = list->start; // Pega primeiro elemento
 	
 	list->start = start->next; // Seta Elemento seguinte como primeiro elemento
 	free(start);
 
-	(list->start)->prev = NULL; // Seta anterior do novo primeiro elemento como NULL
+	if(list->start != NULL){
+		(list->start)->prev = NULL; // Seta anterior do novo primeiro elemento como NULL
+	}
+	
 	(list->size)--;
-	return;
+	
+	return 1;
+}
+
+/*
+	Executa uma função em cada elemento da lista
+*/
+void funcao_in_lista(lista* list, funcao do_func)
+{
+  nodo *current = list->start;
+  int i;
+  for (i = 0; i < list->size; i++) {
+    do_func(current->elem);
+    current = current->next;
+  }
+}
+
+/*
+	Executa uma função em um unico elemento da lista
+*/
+void funcao_in_index(lista* list, int index, funcao do_func)
+{
+  nodo *current = list->start;
+  
+  int i;
+  for (i = 0; i <= index; i++) {
+    current = current->next;
+  }
+  
+  do_func(current->elem);
 }

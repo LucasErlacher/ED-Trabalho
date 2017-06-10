@@ -26,9 +26,16 @@ void inserir(lista* list, void* elem);
 /* Fim Adicionar Elementos */
 
 /* Inicio Remover Elementos */
-void remover_start(lista* list);
+int remover_start(lista* list);
 void remover_index(lista* list, int pos);
-void remover_final(lista* list);
+int remover_final(lista* list);
 /* Fim Remover Elementos */
+
+/* Inicio Função Genérica - Ponteiro pra função */
+typedef void (*funcao)(void*);
+void funcao_in_lista(lista* llist, funcao do_func); // Executa uma função na lista inteira
+void funcao_in_index(lista* llist, int index, funcao do_func); // Executa uma função em um nodo específico
+/* Fim Função Genérica */
+
 
 #endif

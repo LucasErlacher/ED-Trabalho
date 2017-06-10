@@ -15,17 +15,22 @@ int main(int argc,char **argv){
 	lista* l;
 	l = criar_lista();
 	
-	
-	int i;
-	for(i = 0; i < 30; i++){
-		inserir(l, i);
+	int *i = (int *)malloc(sizeof(int));
+	for(*i = 0; *i < 10; *i = *i + 1){
+		inserir(l, *i);
+		
 	}
 	
 	print_lista(l);
 	
-	remover_start(l);
+	if(remover_final(l)){
+		print_lista(l);
+	}
 	
-	print_lista(l);
+	if(remover_start(l)){
+		print_lista(l);
+	}
+	
 	return 0;
 }
 
