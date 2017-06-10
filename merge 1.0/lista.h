@@ -31,4 +31,8 @@ void remover_index(lista* list, int pos);
 void remover_final(lista* list);
 /* Fim Remover Elementos */
 
+/* Início destruir toda a lista */
+void destruir_lista(lista* list);
+/* Fim destruir toda a lista*/
+
 #endif

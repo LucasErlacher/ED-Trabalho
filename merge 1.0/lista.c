@@ -105,7 +105,7 @@ void inserir(lista* list, void* elem){
 }
 
 /*
-	Insere elemento no index enviado como paramentro
+	Insere elemento no index enviado como parametro
 */
 void inserir_index(lista* list, void* elem, int index){
 	if(index == 0) inserir_start(list, elem); // Caso index seja 0, usa a função insere_start
@@ -138,7 +138,7 @@ void remover_final(lista* list){
 }
 
 /*
-	Remove ultimo elemento da lista
+	Remove primeiro elemento da lista
 */
 void remover_start(lista* list){
 	nodo *start = list->start; // Pega primeiro elemento
@@ -148,5 +148,51 @@ void remover_start(lista* list){
 
 	(list->start)->prev = NULL; // Seta anterior do novo primeiro elemento como NULL
 	(list->size)--;
+	return;
+}
+
+/*
+	Remove o elemento no index enviado como parametro
+*/
+void remover_index(lista* list, int index){
+	
+	if (index >= get_size(list)) return;
+	else if (index == 0) remover_start(list);
+	else if (index == get_size(list)-1) remover_final(list);
+	else
+	{
+		nodo *n = _get_nodo_index(list,index); //Pega o nodo do index
+		
+		(n->prev)->next = n->next; //Seta o próximo nodo do elemento anterior ao Index
+		(n->next)->prev = n->prev; //Seta o nodo anterior do próximo elemento do Index.
+		
+		free(n);
+		
+		(list->size)--;
+		
+	}
+	return;
+}
+
+/*
+	Destrói a lista inteira
+*/
+void destruir_lista(lista* list){
+	nodo *current = list->start;
+	
+	for(int i = 0; i < get_size(list); i++){
+		if (current->next == NULL){
+			list->end = list->start = NULL; //Seta os valores do início e fim para NULL
+			free(current);
+		}
+		else{
+			list->start = current->next;
+			free(current);
+			current = list->start;
+		}
+	}
+	
+	list->size = 0;
+	
 	return;
 }
