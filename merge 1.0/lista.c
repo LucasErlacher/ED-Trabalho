@@ -125,28 +125,6 @@ void inserir_index(lista* list, void* elem, int index){
 }
 
 /*
-	Remove ultimo elemento da lista
-*/
-int remover_final(lista* list){
-	if(!list->size){
-		return 0; // Em caso de falha
-	}
-	
-	nodo *end = list->end;
-	
-	list->end = end->prev;
-	//free(end->elem); // Só dar free no elemento caso seja um ponteiro!
-	free(end);
-	
-	if(list->end != NULL){ // Só seta caso a lista ainda tenha elementos
-		(list->end)->next = NULL;	
-	}
-	
-	(list->size)--;
-	return 1; // Em caso de sucesso 
-}
-
-/*
 	Remove primeiro elemento da lista
 */
 int remover_start(lista* list){
@@ -166,6 +144,51 @@ int remover_start(lista* list){
 	(list->size)--;
 	
 	return 1;
+}
+
+/*
+	Remove o elemento no index enviado como parametro
+*/
+int remover_index(lista* list, int index){
+	
+	if (index >= get_size(list)) return 0;
+	else if (index == 0) remover_start(list);
+	else if (index == get_size(list)-1) remover_final(list);
+	else
+	{
+		nodo *n = _get_nodo_index(list,index); //Pega o nodo do index
+		
+		(n->prev)->next = n->next; //Seta o próximo nodo do elemento anterior ao Index
+		(n->next)->prev = n->prev; //Seta o nodo anterior do próximo elemento do Index.
+		
+		free(n);
+		
+		(list->size)--;
+	}
+	
+	return 1;
+}
+
+/*
+	Remove ultimo elemento da lista
+*/
+int remover_final(lista* list){
+	if(!list->size){
+		return 0; // Em caso de falha
+	}
+	
+	nodo *end = list->end;
+	
+	list->end = end->prev;
+	//free(end->elem); // Só dar free no elemento caso seja um ponteiro!
+	free(end);
+	
+	if(list->end != NULL){ // Só seta caso a lista ainda tenha elementos
+		(list->end)->next = NULL;	
+	}
+	
+	(list->size)--;
+	return 1; // Em caso de sucesso 
 }
 
 /*
@@ -196,34 +219,10 @@ void funcao_in_index(lista* list, int index, funcao do_func)
   do_func(current->elem);
 }
 
-
-/*
-	Remove o elemento no index enviado como parametro
-*/
-void remover_index(lista* list, int index){
-	
-	if (index >= get_size(list)) return;
-	else if (index == 0) remover_start(list);
-	else if (index == get_size(list)-1) remover_final(list);
-	else
-	{
-		nodo *n = _get_nodo_index(list,index); //Pega o nodo do index
-		
-		(n->prev)->next = n->next; //Seta o próximo nodo do elemento anterior ao Index
-		(n->next)->prev = n->prev; //Seta o nodo anterior do próximo elemento do Index.
-		
-		free(n);
-		
-		(list->size)--;
-		
-	}
-	return;
-}
-
 /*
 	Destrói a lista inteira
 */
-void destruir_lista(lista* list){
+int destruir_lista(lista* list){
 	nodo *current = list->start;
 	
 	int i;
@@ -239,8 +238,8 @@ void destruir_lista(lista* list){
 		}
 	}
 	
-	list->size = 0;
-	
-	return;
+	free(list);
+		
+	return 1;
 }
 

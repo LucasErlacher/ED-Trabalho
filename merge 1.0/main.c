@@ -23,16 +23,9 @@ int main(int argc,char **argv){
 	
 	print_lista(l);
 	
-	if(remover_final(l)){
+	if(remover_index(l, 5)){
 		print_lista(l);
 	}
-	
-	if(remover_start(l)){
-		print_lista(l);
-	}
-	
-
-	print_lista(l);
 	
 	destruir_lista(l);
 	

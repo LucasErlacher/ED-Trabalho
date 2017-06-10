@@ -27,7 +27,7 @@ void inserir(lista* list, void* elem);
 
 /* Inicio Remover Elementos */
 int remover_start(lista* list);
-void remover_index(lista* list, int pos);
+int remover_index(lista* list, int pos);
 int remover_final(lista* list);
 /* Fim Remover Elementos */
 
@@ -38,7 +38,7 @@ void funcao_in_index(lista* llist, int index, funcao do_func); // Executa uma fu
 /* Fim Função Genérica */
 
 /* Início destruir toda a lista */
-void destruir_lista(lista* list);
+int destruir_lista(lista* list);
 /* Fim destruir toda a lista*/
 
 #endif
