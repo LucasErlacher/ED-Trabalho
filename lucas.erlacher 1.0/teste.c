@@ -1,44 +1,37 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-#ifndef __bibNODO__
-#define __bibNODO__
-
-#include "nodo.h"
-
-#endif
-
-#ifndef __bibLISTA__
-#define __bibLISTA__
-
-#include "lista.h"
-
-#endif
-
-#ifndef __bibFILA__
-
-#define __bibFILA__
-
-#include "fila.h"
-
-#endif
-
+#include <time.h>
+#include "filaPrioridade.h"
+#include "nodoPrioridade.h"
+/*
+void imprimeFila(fila_prioridade *varFila){
+	nodo_prioridade *n = varFila->first;
+	
+	do{
+		printf("%d \n",(*(int*)get_ElemNodo(n)));
+		if(n->next != NULL) n = n->next;
+	}while(n->next != NULL);
+	
+	return;
+}
+*/
 
 int main(int argc, char** argv){
-	fila *vfila;
-	vfila = inic_filaNULL();
+	srand(time(NULL));
 	
-	int vet[] = {1, 2, 3, 4, 5};
+	fila_prioridade *varFila = criar_fila_prioridade();
 	
-	for(int x = 0; x < 5; x++){
-		nodo *n = create_nodo(vet+x);
-		insert_Nodo(vfila, n);
-	}	
-	
-	for(int x = 0; x < 5; x++){
-		int *num = (int*)pop_Elem(vfila);
-		printf("%d \n", *num);
+	for (int x = 0; x < 10; x++)
+	{
+		int prioridade = (rand()%3) + 1;
+		inserir_prioridade(varFila,&x,prioridade);
+		
 	}
 	
+	//imprimeFila(varFila);
+	
+	clear_Fila(varFila);
+	
+	free(varFila);
 	return 0;
 }

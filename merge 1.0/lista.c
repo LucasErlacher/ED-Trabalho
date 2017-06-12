@@ -239,7 +239,7 @@ int destruir_lista(lista* list){
 	}
 	
 	free(list);
-		
+	
 	return 1;
 }
 
