@@ -24,6 +24,7 @@ int main(int argc, char** argv){
 	for (int x = 0; x < 10; x++)
 	{
 		int prioridade = (rand()%3) + 1;
+		printf("%d\n",prioridade);
 		inserir_prioridade(varFila,&x,prioridade);
 		
 	}

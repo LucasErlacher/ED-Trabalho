@@ -14,6 +14,7 @@ void inserir_prioridade(fila_prioridade* varFila, void* elemento, int prioridade
 	
 	if (varFila->tam == 0){
 		varFila->first = varFila->last = nTemp; //Inicializa fila se não houver elementos
+		printf("NOVO %p\n\n", (void*)nTemp);//-------------- TESTE ---------------
 	}
 	else
 	{
@@ -29,12 +30,16 @@ void inserir_prioridade(fila_prioridade* varFila, void* elemento, int prioridade
 			nTemp->next = nAux;
 			nAux->prev = nTemp;
 			varFila->first = nTemp;
+			
+			printf("NOVO %p -> %p \n\n", (void*)nTemp, (void*)nTemp->next);//-------------- TESTE ---------------
 		}
 		else if((nAux->next == NULL) && (get_prioridade(nAux) < prioridade)) //Insere no final
 		{
 			nAux->next = nTemp;
 			nTemp->prev = nAux;
 			varFila->last = nTemp;
+			
+			printf("%p <- NOVO %p\n\n", (void*)nTemp->prev, (void*)nTemp);//-------------- TESTE ---------------
 		}
 		else //Insere no meio
 		{
@@ -43,7 +48,7 @@ void inserir_prioridade(fila_prioridade* varFila, void* elemento, int prioridade
 			nAux->prev = nTemp;
 			nTemp->next = nAux;
 			
-			printf("%p <- %p -> %p \n\n", (void*)nTemp->prev, (void*)nTemp, (void*)nTemp->next);//-------------- TESTE ---------------
+			printf("%p <- NOVO %p -> %p \n\n", (void*)nTemp->prev, (void*)nTemp, (void*)nTemp->next);//-------------- TESTE ---------------
 		}
 		
 	}
