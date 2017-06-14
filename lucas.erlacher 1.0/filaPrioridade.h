@@ -12,7 +12,7 @@ struct fila{
 fila_prioridade* criar_fila_prioridade();
 void inserir_prioridade(fila_prioridade* varFila, void* elemento, int prioridade);
 void* peek(fila_prioridade* varFila);
-void* pop_Elem(fila_prioridade* varFila);
+int pop_Elem(fila_prioridade* varFila);
 void clear_Fila(fila_prioridade* varFila);
 
 #endif

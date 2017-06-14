@@ -13,44 +13,39 @@ void inserir_prioridade(fila_prioridade* varFila, void* elemento, int prioridade
 	nodo_prioridade *nTemp = criar_nodo_prioridade(elemento, prioridade); //Encapsula o elemento e prioridade em um nodo
 	
 	if (varFila->tam == 0){
-		varFila->first = varFila->last = nTemp; //Inicializa fila se não houver elementos
-		printf("NOVO %p\n\n", (void*)nTemp);//-------------- TESTE ---------------
+		varFila->first = varFila->last = nTemp; //Inicializa fila se n�o houver elementos
+	//	printf("%d if \n ", *(int*)nTemp->elem);
 	}
-	else
-	{
-		nodo_prioridade	*nAux = varFila->first; //Referência para o primeiro nodo da fila
+	else{
+		nodo_prioridade	*nAux = varFila->last; //Referenncia para o primeiro nodo da fila
 		
-		while((get_prioridade(nAux) < prioridade) && (nAux->next != NULL))
-		{	
-			nAux = nAux->next; //Caminha na fila até encontrar um nodo igual ou o próximo ser nulo
+		while((get_prioridade(nAux) < prioridade) && (nAux->prev != NULL)){
+			nAux = nAux->prev; //Caminha na fila até encontrar um nodo igual ou o próximo ser nulo
 		}
 		
-		if((nAux->prev == NULL) && (get_prioridade(nAux) >= prioridade)) //Insere no começo
+		
+		if((nAux->next == NULL) && (get_prioridade(nAux) >= prioridade)) //Insere no final
 		{
-			nTemp->next = nAux;
-			nAux->prev = nTemp;
-			varFila->first = nTemp;
-			
-			printf("NOVO %p -> %p \n\n", (void*)nTemp, (void*)nTemp->next);//-------------- TESTE ---------------
-		}
-		else if((nAux->next == NULL) && (get_prioridade(nAux) < prioridade)) //Insere no final
-		{
-			nAux->next = nTemp;
 			nTemp->prev = nAux;
+			nAux->next = nTemp;
 			varFila->last = nTemp;
-			
-			printf("%p <- NOVO %p\n\n", (void*)nTemp->prev, (void*)nTemp);//-------------- TESTE ---------------
+		}
+		else if((nAux->prev == NULL) && (get_prioridade(nAux) < prioridade)) //Insere no come�o
+		{
+			nAux->prev = nTemp;
+			nTemp->next = nAux;
+			varFila->first = nTemp;
 		}
 		else //Insere no meio
 		{
-			(nAux->prev)->next = nTemp;
-			nTemp->prev = nAux->prev;
-			nAux->prev = nTemp;
-			nTemp->next = nAux;
+			nodo_prioridade *oldNext = nAux->next;
 			
-			printf("%p <- NOVO %p -> %p \n\n", (void*)nTemp->prev, (void*)nTemp, (void*)nTemp->next);//-------------- TESTE ---------------
+			nAux->next = nTemp;
+			nTemp->prev = nAux;
+			
+			oldNext->prev = nTemp;
+			nTemp->next = oldNext;
 		}
-		
 	}
 	
 	(varFila->tam)++;
@@ -61,29 +56,36 @@ void inserir_prioridade(fila_prioridade* varFila, void* elemento, int prioridade
 void* peek(fila_prioridade* varFila){
 	void* value_temp;
 	
-	if(varFila->first == NULL){
+	if(varFila->tam == 0){
 		return NULL;
 	}
-	else{
-		nodo_prioridade *nTemp = varFila->first;
-		value_temp = get_ElemNodo(nTemp); 
-	}
 	
+	value_temp = (varFila->first)->elem;
 	return value_temp;
 }
 
-void* pop_Elem(fila_prioridade* varFila){
-	nodo_prioridade *nTemp = varFila->last;
+int pop_Elem(fila_prioridade* varFila){
+	int value = 0;
 	
-	if(nTemp->prev != NULL)	varFila->last = (varFila->last)->prev;
+	if(varFila->tam != 0)
+	{
+		nodo_prioridade *nTemp = varFila->first;
+		
+		if(nTemp->next != NULL) {
+			varFila->first = nTemp->next;
+			(varFila->first)->prev = NULL;
+		}
+		else varFila->first = varFila->last = NULL;
+		
+		free(nTemp);
+		
+		(varFila->tam)--;
+		
+		value = 1;
+	}
+	
 
-	void *elem = get_ElemNodo(nTemp);
-	
-	free(nTemp);
-	
-	(varFila->tam)--;
-	
-	return elem;
+	return value;
 }
 
 void clear_Fila(fila_prioridade* varFila){

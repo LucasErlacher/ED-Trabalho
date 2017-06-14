@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "nodoPrioridade.h"
 
-nodo_prioridade* criar_nodo_prioridade(void* object,int prioridade){
+nodo_prioridade* criar_nodo_prioridade(void* object, int prioridade){
 	nodo_prioridade *n;
 	
 	if ((n = malloc(sizeof(nodo_prioridade))) == NULL)	return NULL;
