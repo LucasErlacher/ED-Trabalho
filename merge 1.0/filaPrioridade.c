@@ -9,10 +9,6 @@ fila_prioridade* criar_fila_prioridade(){
 	return var;
 }
 
-int get_tam(fila_prioridade* varFila){
-	return varFila->tam;
-}
-
 void inserir_prioridade(fila_prioridade* varFila, void* elemento, int prioridade){
 	nodo_prioridade *nTemp = criar_nodo_prioridade(elemento, prioridade); //Encapsula o elemento e prioridade em um nodo
 	

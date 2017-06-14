@@ -10,7 +10,6 @@ struct fila{
 };
 
 fila_prioridade* criar_fila_prioridade();
-int get_tam(fila_prioridade* varFila);
 void inserir_prioridade(fila_prioridade* varFila, void* elemento, int prioridade);
 void* peek(fila_prioridade* varFila);
 int pop_Elem(fila_prioridade* varFila);

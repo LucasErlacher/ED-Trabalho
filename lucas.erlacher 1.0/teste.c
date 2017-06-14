@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "filaPrioridade.h"
-#include "nodoPrioridade.h"
-
+/*
 void imprimeFila(fila_prioridade *varFila){
 	nodo_prioridade *n = varFila->first;
 	
@@ -29,7 +28,7 @@ int main(int argc, char** argv){
 		inserir_prioridade(varFila, x, prioridade);
 	}
 	
-	printf("Imprimindo FILA 1:\n");
+	printf("Imprimindo FILA 1 Tamanho %d:\n", get_tam(varFila));
 	
 	imprimeFila(varFila);
 	
@@ -37,7 +36,7 @@ int main(int argc, char** argv){
 	
 	pop_Elem(varFila);
 	
-	printf("Imprimindo FILA 2:\n");
+	printf("Imprimindo FILA 2 Tamanho %d:\n", get_tam(varFila));
 	
 	imprimeFila(varFila);
 	
@@ -47,4 +46,8 @@ int main(int argc, char** argv){
 	
 	free(varFila);
 	return 0;
+
+*/
+int main(int argc, char** argv){
+
 }
