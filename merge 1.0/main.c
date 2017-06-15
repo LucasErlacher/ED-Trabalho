@@ -1,7 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "lista.h"
+#include "filaPrioridade.h"
+#include "maquina.h"
+#include "rolamento.h"
 
+int main(int argc, char *argv[]) {
+	Maquina * fresa = criar_maquina();
+	Maquina * mandril = criar_maquina();
+	Maquina * torno1 = criar_maquina();
+	Maquina * torno2 = criar_maquina();
+	
+	return 0;
+}
+
+/*
 void print_lista(lista *list){
 	int i;
 	
@@ -35,4 +48,4 @@ int main(int argc,char **argv){
 	
 	return 0;
 }
-
+*/

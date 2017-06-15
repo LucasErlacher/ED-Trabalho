@@ -233,6 +233,7 @@ int destruir_lista(lista* list){
 		}
 		else{
 			list->start = current->next;
+			// free(current->elem); Caso seja uma struct, precisa dar free no elem
 			free(current);
 			current = list->start;
 		}
