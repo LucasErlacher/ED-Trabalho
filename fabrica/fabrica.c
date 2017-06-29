@@ -104,7 +104,7 @@ int main(int argc, char** argv){
 		inserir_ordenada(lista_tempo_chegada_pedidos, (void*)&chegada_esferico);		
 	}
 
-	printf("Tempo Atual: %lf\nTempo maquina fica livre: %lf\n", tempo_atual, tempo_livre(torno1));
+	printf("Tempo Atual: %lf\nTempo maquina fica livre: %lf\n", tempo_atual, tempo_livre(fresa));
 	return 0;
 }
 
@@ -115,6 +115,8 @@ double chegadaPedido(double param) {
 		u = (double) (rand()%RAND_MAX) / RAND_MAX;
 	} while ((u==0) || (u==1));
 
+	printf("parametro: %lf\n", param);
+	printf("teste: %lf\n", (double) (-param * log (u)));
 	return (double) (-param * log (u));
 }
 
@@ -124,6 +126,6 @@ double tempoMaquina(double tempoMaquina) {
 }
 
 int compara(void *v1, void *v2){
-	if (*(double*)v1 < *(double*)v2) return 1;
+	if (*(double*)v1 > *(double*)v2) return 1;
 	else return 0;
 }

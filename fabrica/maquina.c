@@ -12,7 +12,6 @@ MAQ *criar_maquina(double (*geraTempo)(double)){
 
 void inserir_maquina(MAQ *maquina, ROL* rolamento, double tempo_atual, double tempoProcessamento){
 	maquina->elem = rolamento;
-
 	double tempo_livre;
 	tempo_livre = (maquina->func)(tempoProcessamento) + tempo_atual;
 
