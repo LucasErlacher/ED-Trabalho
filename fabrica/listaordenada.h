@@ -9,10 +9,10 @@ struct lista
 {
 	nodo *ini, *fim;
 	int tam;
-	int (*func)(void*,void*);
+	double (*func)(void*,void*);
 };
 
-int compara(void* elem1, void* elem2);
+double compara(void* elem1, void* elem2);
 lista* criar_lista_ordenada(int (*func)(void*, void*));
 void inserir_ordenada(lista *lst, void *elem);
 void remover_ordenada(lista *lst, int pos);

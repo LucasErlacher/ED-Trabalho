@@ -2,7 +2,7 @@
 #include "listaordenada.h"
 #include "nodo.h"
 
-lista* criar_lista_ordenada(int (*func)(void*,void*)){
+lista* criar_lista_ordenada(double (*func)(void*,void*)){
 	lista *lst = malloc(sizeof(lista));
 	lst->func = func;
 	lst->tam = 0;

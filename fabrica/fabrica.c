@@ -11,6 +11,10 @@
 #define CHEGADA_CONICO 19.1
 #define CHEGADA_ESFERICO 8.0
 
+//Declarando funções:
+double chegadaPedido(double param);
+double tempoMaquina(double tempoMaquina);
+
 int main(int argc, char** argv){
 	/*
 		Para criar os rolamentos, basta chamar a função: criar_rolamento(tipo)
@@ -50,22 +54,29 @@ int main(int argc, char** argv){
 	fila_mandril = criar_fila_prioridade();
 	fila_fresa = criar_fila_prioridade();
 
-	//Declarando Lista:
+	//Declarando Listas:
 	lista_tempo_livre_maquinas = criar_lista_ordenada();
+	lista_tempo_chegada_pedidos = criar_lista_ordenada();
+
+	//Declarando chegada dos pedidos:
+	double chegada_cilindrico = chegadaPedido(CHEGADA_CILINDRICO);
+	double chegada_conico = chegadaPedido(CHEGADA_CONICO);
+	double chegada_esferico = chegadaPedido(CHEGADA_ESFERICO);
+
 	return 0;
 }
 
 /* Gera o tempo de chegada de um novo pedido */
-float chegadaPedido(float param) {
-	float u=0;
+double chegadaPedido(double param) {
+	double u=0;
 	do {
-		u = (float) (rand()%RAND_MAX) / RAND_MAX;
+		u = (double) (rand()%RAND_MAX) / RAND_MAX;
 	} while ((u==0) || (u==1));
 
-	return (float) (-param * log (u));
+	return (double) (-param * log (u));
 }
 
 /* Retorna o tempo de processamento em uma máquina específica. */
-float tempoMaquina(float tempoMaquina) {
+double tempoMaquina(double tempoMaquina) {
 	return 2.0 * tempoMaquina * rand() / (RAND_MAX + 1.0);
 }
