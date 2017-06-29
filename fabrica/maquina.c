@@ -10,9 +10,13 @@ MAQ *criar_maquina(double (*geraTempo)(double)){
 	return maquina;
 }
 
-void inserir_maquina(MAQ *maquina, ROL* rolamento, double chegada, double tempo_atual){
+void inserir_maquina(MAQ *maquina, ROL* rolamento, double tempo_atual, double tempoProcessamento){
 	maquina->elem = rolamento;
-	maquina->tempo_livre = (maquina->func)();
+
+	double tempo_livre;
+	tempo_livre = (maquina->func)(tempoProcessamento) + tempo_atual;
+
+	maquina->tempo_livre = tempo_livre;
 	return;
 }
 
@@ -22,10 +26,6 @@ ROL* libera_maquina(MAQ *maquina){
 	return rolamento;
 }
 
-float pegar_tempo_processamento(MAQ *maquina){
-	return maquina->tempo_processamento;
-}
-
-float tempo_livre(MAQ *maquina){
+double tempo_livre(MAQ *maquina){
 	return maquina->tempo_livre;
 }

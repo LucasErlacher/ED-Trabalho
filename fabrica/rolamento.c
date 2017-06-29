@@ -71,11 +71,21 @@ ROL* criar_rolamento(char tipo_rolamento){
 	return rolamento;
 }
 
+char atual_maquina(ROL *rolamento){
+	return (rolamento->ordemMaq)[rolamento->maquina_atual];
+}
+
 char proxima_maquina(ROL *rolamento){
 	(rolamento->maquina_atual)++;
 	char prox_maquina = (rolamento->ordemMaq)[rolamento->maquina_atual];
 	return prox_maquina;
 }
+
+double pegar_tempo_torno(ROL *rolamento){return rolamento->tempo_torno;}
+
+double pegar_tempo_mandril(ROL *rolamento){return rolamento->tempo_mandril;}
+
+double pegar_tempo_fresa(ROL *rolamento){return rolamento->tempo_fresa;}
 
 char pegar_tipo(ROL* rolamento){
 	return rolamento->tipo;

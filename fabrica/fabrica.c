@@ -14,7 +14,7 @@
 //Declarando funções:
 double chegadaPedido(double param);
 double tempoMaquina(double tempoMaquina);
-double compara(void *v1, void *v2);
+int compara(void *v1, void *v2);
 
 int main(int argc, char** argv){
 	/*
@@ -45,19 +45,19 @@ int main(int argc, char** argv){
 	tempo_atual = 0;
 
 	//Declarando máquinas - 2 Tornos, 1 Mandril e 1 Fresa:
-	torno1 = criar_maquina(tempoMaquina);
-	torno2 = criar_maquina(tempoMaquina);
-	fresa = criar_maquina(tempoMaquina);
-	mandril = criar_maquina(tempoMaquina);
+	MAQ *torno1 = criar_maquina(tempoMaquina);
+	MAQ *torno2 = criar_maquina(tempoMaquina);
+	MAQ *fresa = criar_maquina(tempoMaquina);
+	MAQ *mandril = criar_maquina(tempoMaquina);
 
 	//Declarando Filas de Prioridade das Máquinas:
-	fila_torno = criar_fila_prioridade();
-	fila_mandril = criar_fila_prioridade();
-	fila_fresa = criar_fila_prioridade();
+	fila_prioridade *fila_torno = criar_fila_prioridade();
+	fila_prioridade *fila_mandril = criar_fila_prioridade();
+	fila_prioridade *fila_fresa = criar_fila_prioridade();
 
 	//Declarando Listas:
-	lista_tempo_livre_maquinas = criar_lista_ordenada(compara);
-	lista_tempo_chegada_pedidos = criar_lista_ordenada(compara);
+	lista *lista_tempo_livre_maquinas = criar_lista_ordenada(compara);
+	lista *lista_tempo_chegada_pedidos = criar_lista_ordenada(compara);
 
 	//Declarando chegada dos pedidos:
 	double chegada_cilindrico = chegadaPedido(CHEGADA_CILINDRICO);
@@ -75,30 +75,36 @@ int main(int argc, char** argv){
 
 	tempo_atual = tempo_atual + menor;
 
+	//Variáveis para o rolamento
 	ROL *rolamento_atual;
+	double tempoProcessamento;
+	char prox_maquina;
 
 	//Gera um novo tempo de pedido e atualiza a lista ordenada:
 	if (menor == chegada_cilindrico)
 	{
-		rolamento_atual = criar_rolamento('c');
-		inserir_maquina();
-		chegada_cilindrico = chegadaPedido(CHEGADA_CILINDRICO) + tempo_atual;
-		inserir_ordenada(lista_tempo_chegada_pedidos, (void*)&chegada_cilindrico);
+		rolamento_atual = criar_rolamento('c'); //Cria o rolamento
+		tempoProcessamento = pegar_tempo_torno(rolamento_atual); //Pega o tempo médio que aquele rolamento deve ficar no torno
+		inserir_maquina(torno1, rolamento_atual, tempo_atual, tempoProcessamento); //Insere na maquina especificada
+		chegada_cilindrico = chegadaPedido(CHEGADA_CILINDRICO) + tempo_atual; //Gera um novo tempo para chegar um novo cilindrico
+		inserir_ordenada(lista_tempo_chegada_pedidos, (void*)&chegada_cilindrico); //Insere novamente na lista
 	} else if (menor == chegada_conico)
 	{
 		rolamento_atual = criar_rolamento('k');
-		inserir_maquina();
+		tempoProcessamento = pegar_tempo_torno(rolamento_atual); //Pega o tempo médio que aquele rolamento deve ficar no torno
+		inserir_maquina(torno1, rolamento_atual, tempo_atual, tempoProcessamento); //Insere na maquina especificada
 		chegada_conico = chegadaPedido(CHEGADA_CONICO) + tempo_atual;
 		inserir_ordenada(lista_tempo_chegada_pedidos, (void*)&chegada_conico);
 	} else
 	{
 		rolamento_atual = criar_rolamento('a');
-		inserir_maquina();
+		tempoProcessamento = pegar_tempo_fresa(rolamento_atual); //Pega o tempo médio que aquele rolamento deve ficar no torno
+		inserir_maquina(fresa, rolamento_atual, tempo_atual, tempoProcessamento); //Insere na maquina especificada
 		chegada_esferico = chegadaPedido(CHEGADA_ESFERICO) + tempo_atual;
 		inserir_ordenada(lista_tempo_chegada_pedidos, (void*)&chegada_esferico);		
 	}
 
-
+	printf("Tempo Atual: %lf\nTempo maquina fica livre: %lf\n", tempo_atual, tempo_livre(torno1));
 	return 0;
 }
 

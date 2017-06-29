@@ -24,7 +24,12 @@ void criar_esferico_titanio(ROL* rolamento);
 
 ROL* criar_rolamento(char tipo_rolamento);
 
+char atual_maquina(ROL *rolamento);
 char proxima_maquina(ROL *rolamento);
+
+double pegar_tempo_torno(ROL *rolamento);
+double pegar_tempo_mandril(ROL *rolamento);
+double pegar_tempo_fresa(ROL *rolamento);
 
 char pegar_tipo(ROL* rolamento);
 int pegar_prioridade(ROL* rolamento);

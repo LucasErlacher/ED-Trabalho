@@ -12,7 +12,7 @@ struct lista
 	int (*func)(void*,void*);
 };
 
-int compara(void* elem1, void* elem2);
+//int compara(void* elem1, void* elem2);
 lista* criar_lista_ordenada(int (*func)(void*, void*));
 void inserir_ordenada(lista *lst, void *elem);
 void remover_ordenada(lista *lst, int pos);
