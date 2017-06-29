@@ -11,6 +11,7 @@ void criar_cilindrico(ROL* rolamento){
 	rolamento->tempo_fresa = 0.5;
 	rolamento->tempo_mandril = 1.2;
 	rolamento->prioridade = 1;
+	rolamento->maquina_atual = 0;
 	return;
 }
 
@@ -20,6 +21,7 @@ void criar_conico(ROL* rolamento){
 	rolamento->tempo_torno = 1.8;
 	rolamento->tempo_mandril = 2.1;
 	rolamento->prioridade = 2;
+	rolamento->maquina_atual = 0;
 	return;
 }
 
@@ -30,6 +32,7 @@ void criar_esferico_aco(ROL* rolamento){
 	rolamento->tempo_fresa = 0.5;
 	rolamento->tempo_mandril = 1.4;
 	rolamento->prioridade = 3;
+	rolamento->maquina_atual = 0;
 	return;
 }
 
@@ -40,6 +43,7 @@ void criar_esferico_titanio(ROL* rolamento){
 	rolamento->tempo_fresa = 0.6;
 	rolamento->tempo_mandril = 1.5;
 	rolamento->prioridade = 3;
+	rolamento->maquina_atual = 0;
 	return;
 }
 
@@ -65,6 +69,12 @@ ROL* criar_rolamento(char tipo_rolamento){
 	}
 
 	return rolamento;
+}
+
+char proxima_maquina(ROL *rolamento){
+	(rolamento->maquina_atual)++;
+	char prox_maquina = (rolamento->ordemMaq)[rolamento->maquina_atual];
+	return prox_maquina;
 }
 
 char pegar_tipo(ROL* rolamento){

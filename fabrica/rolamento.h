@@ -7,10 +7,13 @@ struct rolamento
 {
 	char tipo;
 	char ordemMaq[6];
+
 	float tempo_torno;
 	float tempo_mandril;
 	float tempo_fresa;
 	float tempo_inicio;
+
+	int maquina_atual;
 	int prioridade;
 };
 
@@ -21,6 +24,7 @@ void criar_esferico_titanio(ROL* rolamento);
 
 ROL* criar_rolamento(char tipo_rolamento);
 
+char proxima_maquina(ROL *rolamento);
 
 char pegar_tipo(ROL* rolamento);
 int pegar_prioridade(ROL* rolamento);
