@@ -4,6 +4,7 @@
 MAQ *criar_maquina(double (*geraTempo)(double)){
 	MAQ *maquina = (MAQ*) malloc(sizeof(MAQ));
 
+	maquina->elem = NULL;
 	maquina->tempo_livre = 0;
 	maquina->func = geraTempo;
 
@@ -27,4 +28,9 @@ ROL* libera_maquina(MAQ *maquina){
 
 double tempo_livre(MAQ *maquina){
 	return maquina->tempo_livre;
+}
+
+int ocupada(MAQ *maquina){
+	if (maquina->elem == NULL) return 0;
+	else return 1;
 }

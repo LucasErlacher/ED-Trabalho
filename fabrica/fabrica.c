@@ -80,7 +80,9 @@ int main(int argc, char** argv){
 	double tempoProcessamento;
 	char prox_maquina;
 	int quantidade_pedidos_esfericos;
+	int prioridade;
 
+	//Inicializa a Fabrica
 	//Gera um novo tempo de pedido e atualiza a lista ordenada:
 	if (menor == chegada_cilindrico)
 	{
@@ -116,18 +118,128 @@ int main(int argc, char** argv){
 		aux1 = *(double*)obter_ordenada(lista_tempo_chegada_pedidos,0);
 		aux2 = *(double*)obter_ordenada(lista_tempo_livre_maquinas,0);
 
-		if(aux1 < aux2)	menor = aux1;
+		if(aux1 < aux2)	menor = aux1; //Verifica quem é o menor (tempo de chegada ou tempo da maquina ficar livre)
 		else menor = aux2;
 		
-		tempo_atual += menor;
+		tempo_atual += menor; //Atualiza o tempo
 
 		if(menor == chegada_cilindrico){
 
-		} else if (menor == chegada_conico){
-			
-		} else if (menor == chegada_esferico){
+			remover_ordenada(lista_tempo_chegada_pedidos, 0); //Remove da lista de tempos de chegada o menor tempo
+			rolamento_atual = criar_rolamento('c'); //Cria um novo rolamento
+
+			if (tamanho(fila_torno) != 0)
+			{
+				prioridade = pegar_prioridade(rolamento_atual); //Define qual a prioridade do rolamento
+				inserir_prioridade(fila_torno, (void*)rolamento_atual, prioridade); //Insere na fila da máquina onde inicia
+			}
+			else
+			{
+				if(!ocupada(torno1))
+				{
+					tempoProcessamento = pegar_tempo_torno(rolamento_atual); //Pega o tempo médio que aquele rolamento deve ficar no torno
+					inserir_maquina(torno1, rolamento_atual, tempo_atual, tempoProcessamento); //Insere na maquina especificada
+					inserir_ordenada(lista_tempo_livre_maquinas, (double*)&tempo_livre(torno1));
+				} 
+				else if (!ocupada(torno2))
+				{
+					tempoProcessamento = pegar_tempo_torno(rolamento_atual); //Pega o tempo médio que aquele rolamento deve ficar no torno
+					inserir_maquina(torno2, rolamento_atual, tempo_atual, tempoProcessamento); //Insere na maquina especificada
+					inserir_ordenada(lista_tempo_livre_maquinas, (double*)&tempo_livre(torno2));
+				}
+				else
+				{
+					prioridade = pegar_prioridade(rolamento_atual); //Define qual a prioridade do rolamento
+					inserir_prioridade(fila_torno, (void*)rolamento_atual, prioridade); //Insere na fila da máquina onde inicia
+				}
+			}
+
+			chegada_cilindrico = chegadaPedido(CHEGADA_CILINDRICO) + tempo_atual; //Gera um novo tempo para chegar um novo cilindrico
+			inserir_ordenada(lista_tempo_chegada_pedidos, (void*)&chegada_cilindrico); //Insere o novo tempo na lista ordenada			
+
+		} else if (menor == chegada_conico){ //Repete o mesmo procedimento que o anterior
+
+			remover_ordenada(lista_tempo_chegada_pedidos, 0);
+			rolamento_atual = criar_rolamento('k');
+
+			if (tamanho(fila_torno) != 0)
+			{
+				prioridade = pegar_prioridade(rolamento_atual); //Define qual a prioridade do rolamento
+				inserir_prioridade(fila_torno, (void*)rolamento_atual, prioridade); //Insere na fila da máquina onde inicia
+			}
+			else
+			{
+				if(!ocupada(torno1))
+				{
+					tempoProcessamento = pegar_tempo_torno(rolamento_atual); //Pega o tempo médio que aquele rolamento deve ficar no torno
+					inserir_maquina(torno1, rolamento_atual, tempo_atual, tempoProcessamento); //Insere na maquina especificada
+					inserir_ordenada(lista_tempo_livre_maquinas, (double*)&tempo_livre(torno1));
+				} 
+				else if (!ocupada(torno2))
+				{
+					tempoProcessamento = pegar_tempo_torno(rolamento_atual); //Pega o tempo médio que aquele rolamento deve ficar no torno
+					inserir_maquina(torno2, rolamento_atual, tempo_atual, tempoProcessamento); //Insere na maquina especificada
+					inserir_ordenada(lista_tempo_livre_maquinas, (double*)&tempo_livre(torno2));
+				}
+				else
+				{
+					prioridade = pegar_prioridade(rolamento_atual); //Define qual a prioridade do rolamento
+					inserir_prioridade(fila_torno, (void*)rolamento_atual, prioridade); //Insere na fila da máquina onde inicia
+				}
+			}
+
+			chegada_conico = chegadaPedido(CHEGADA_CONICO) + tempo_atual;
+			inserir_ordenada(lista_tempo_chegada_pedidos, (void*)&chegada_conico);			
+
+		} else if (menor == chegada_esferico){ //Repete o mesmo procedimento que o anterior
+
+			remover_ordenada(lista_tempo_chegada_pedidos, 0);
+			if (quantidade_pedidos_esfericos % 9 == 0) rolamento_atual = criar_rolamento('t');
+			else rolamento_atual = criar_rolamento('a');
+
+			if (tamanho(fila_fresa) != 0)
+			{
+				prioridade = pegar_prioridade(rolamento_atual); //Define qual a prioridade do rolamento
+				inserir_prioridade(fila_torno, (void*)rolamento_atual, prioridade); //Insere na fila da máquina onde inicia
+			}
+			else
+			{
+				if(!ocupada(fresa))
+				{
+					tempoProcessamento = pegar_tempo_fresa(rolamento_atual); //Pega o tempo médio que aquele rolamento deve ficar no torno
+					inserir_maquina(fresa, rolamento_atual, tempo_atual, tempoProcessamento); //Insere na maquina especificada
+					inserir_ordenada(lista_tempo_livre_maquinas, (double*)&tempo_livre(fresa));
+				} 
+				else
+				{
+					prioridade = pegar_prioridade(rolamento_atual); //Define qual a prioridade do rolamento
+					inserir_prioridade(fila_fresa, (void*)rolamento_atual, prioridade); //Insere na fila da máquina onde inicia
+				}
+			}
+
+			quantidade_pedidos_esfericos++;
+			chegada_esferico = chegadaPedido(CHEGADA_ESFERICO) + tempo_atual;
+			inserir_ordenada(lista_tempo_chegada_pedidos, (void*)&chegada_esferico);
 
 		} else if (menor == *(double*)tempo_livre(torno1)){
+			remover_ordenada(lista_tempo_livre_maquinas, 0);
+			rolamento_atual = libera_maquina(torno1);
+			prox_maquina = proxima_maquina(rolamento_atual);
+
+			if (prox_maquina == '\0')
+			{
+				
+			} 
+			else if (prox_maquina == 'm')
+			{
+				/* code */
+			}
+			else
+			{
+				//Fresa
+			}
+
+			//Verifica se a próxima maquina está ocupada, se estiver, insere na fila de prioridades dela
 
 		} else if (menor == *(double*)tempo_livre(torno2)){
 

@@ -87,10 +87,6 @@ double pegar_tempo_mandril(ROL *rolamento){return rolamento->tempo_mandril;}
 
 double pegar_tempo_fresa(ROL *rolamento){return rolamento->tempo_fresa;}
 
-char pegar_tipo(ROL* rolamento){
-	return rolamento->tipo;
-}
+char pegar_tipo(ROL* rolamento){return rolamento->tipo;}
 
-int pegar_prioridade(ROL* rolamento){
-	return rolamento->prioridade;
-}
+int pegar_prioridade(ROL* rolamento){return rolamento->prioridade;}
