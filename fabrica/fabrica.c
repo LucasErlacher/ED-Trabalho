@@ -63,7 +63,7 @@ int main(int argc, char** argv){
 	double chegada_cilindrico = chegadaPedido(CHEGADA_CILINDRICO);
 	double chegada_conico = chegadaPedido(CHEGADA_CONICO);
 	double chegada_esferico = chegadaPedido(CHEGADA_ESFERICO);
-
+	
 	//Insere os pedidos na lista para ser ordenado:
 	inserir_ordenada(lista_tempo_chegada_pedidos, (void*)&chegada_cilindrico);
 	inserir_ordenada(lista_tempo_chegada_pedidos, (void*)&chegada_conico);
@@ -79,6 +79,7 @@ int main(int argc, char** argv){
 	ROL *rolamento_atual;
 	double tempoProcessamento;
 	char prox_maquina;
+	int quantidade_pedidos_esfericos;
 
 	//Gera um novo tempo de pedido e atualiza a lista ordenada:
 	if (menor == chegada_cilindrico)
@@ -88,6 +89,7 @@ int main(int argc, char** argv){
 		inserir_maquina(torno1, rolamento_atual, tempo_atual, tempoProcessamento); //Insere na maquina especificada
 		chegada_cilindrico = chegadaPedido(CHEGADA_CILINDRICO) + tempo_atual; //Gera um novo tempo para chegar um novo cilindrico
 		inserir_ordenada(lista_tempo_chegada_pedidos, (void*)&chegada_cilindrico); //Insere novamente na lista
+		inserir_ordenada(lista_tempo_livre_maquinas, (double*)&tempo_livre(torno1));
 	} else if (menor == chegada_conico)
 	{
 		rolamento_atual = criar_rolamento('k');
@@ -95,16 +97,50 @@ int main(int argc, char** argv){
 		inserir_maquina(torno1, rolamento_atual, tempo_atual, tempoProcessamento); //Insere na maquina especificada
 		chegada_conico = chegadaPedido(CHEGADA_CONICO) + tempo_atual;
 		inserir_ordenada(lista_tempo_chegada_pedidos, (void*)&chegada_conico);
+		inserir_ordenada(lista_tempo_livre_maquinas, (double*)&tempo_livre(torno1));
 	} else
 	{
 		rolamento_atual = criar_rolamento('a');
 		tempoProcessamento = pegar_tempo_fresa(rolamento_atual); //Pega o tempo médio que aquele rolamento deve ficar no torno
 		inserir_maquina(fresa, rolamento_atual, tempo_atual, tempoProcessamento); //Insere na maquina especificada
 		chegada_esferico = chegadaPedido(CHEGADA_ESFERICO) + tempo_atual;
-		inserir_ordenada(lista_tempo_chegada_pedidos, (void*)&chegada_esferico);		
+		inserir_ordenada(lista_tempo_chegada_pedidos, (void*)&chegada_esferico);	
+		inserir_ordenada(lista_tempo_livre_maquinas, (double*)&tempo_livre(fresa));
+		quantidade_pedidos_esfericos++;
 	}
 
-	printf("Tempo Atual: %lf\nTempo maquina fica livre: %lf\n", tempo_atual, tempo_livre(fresa));
+	while(tempo_atual < atof(argv[1])){
+
+		double aux1, aux2;
+
+		aux1 = *(double*)obter_ordenada(lista_tempo_chegada_pedidos,0);
+		aux2 = *(double*)obter_ordenada(lista_tempo_livre_maquinas,0);
+
+		if(aux1 < aux2)	menor = aux1;
+		else menor = aux2;
+		
+		tempo_atual += menor;
+
+		if(menor == chegada_cilindrico){
+
+		} else if (menor == chegada_conico){
+			
+		} else if (menor == chegada_esferico){
+
+		} else if (menor == *(double*)tempo_livre(torno1)){
+
+		} else if (menor == *(double*)tempo_livre(torno2)){
+
+		} else if (menor == *(double*)tempo_livre(fresa)){
+
+		} else {
+
+		}
+
+
+
+	}
+
 	return 0;
 }
 
@@ -115,8 +151,6 @@ double chegadaPedido(double param) {
 		u = (double) (rand()%RAND_MAX) / RAND_MAX;
 	} while ((u==0) || (u==1));
 
-	printf("parametro: %lf\n", param);
-	printf("teste: %lf\n", (double) (-param * log (u)));
 	return (double) (-param * log (u));
 }
 

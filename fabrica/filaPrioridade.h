@@ -10,7 +10,7 @@ struct fila{
 };
 
 fila_prioridade* criar_fila_prioridade();
-void inserir(fila_prioridade* varFila, void* elemento, int prioridade);
+void inserir_prioridade(fila_prioridade* varFila, void* elemento, int prioridade);
 void* obter(fila_prioridade* varFila);
 void remover(fila_prioridade* varFila, int pos);
 int tamanho(fila_prioridade *varFila);
