@@ -26,8 +26,8 @@ ROL* libera_maquina(MAQ *maquina){
 	return rolamento;
 }
 
-double tempo_livre(MAQ *maquina){
-	return maquina->tempo_livre;
+double* tempo_livre(MAQ *maquina){
+	return &maquina->tempo_livre;
 }
 
 int ocupada(MAQ *maquina){

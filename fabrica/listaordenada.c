@@ -19,18 +19,18 @@ void inserir_ordenada(lista *lst, void *elem){
 	}
 	else
 	{
-		while((current->ant != NULL) && (lst->func(elem, current->elem)))
+		while((current->ant != NULL) && !(lst->func(elem, current->elem)))
 		{
 			current = current->ant;
 		}
 		
-		if(current->prox == NULL)
+		if((current->prox == NULL) && (lst->func(elem, current->elem)))
 		{
 			current->prox = nTemp;
 			nTemp->ant = current;
 			lst->fim = nTemp;
 		}
-		else if(current->ant == NULL)
+		else if((current->ant == NULL) && (lst->func(elem, current->elem)))
 		{
 			current->ant = nTemp;
 			nTemp->prox = current;
