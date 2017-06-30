@@ -68,9 +68,12 @@ int main(int argc, char** argv){
 	
 	//Insere os pedidos na lista para ser ordenado:
 	inserir_ordenada(lista_tempo_chegada_pedidos, (void*)&chegada_cilindrico);
+	//imprime_lista_ordenada(lista_tempo_chegada_pedidos);
 	inserir_ordenada(lista_tempo_chegada_pedidos, (void*)&chegada_conico);
+	//imprime_lista_ordenada(lista_tempo_chegada_pedidos);
 	inserir_ordenada(lista_tempo_chegada_pedidos, (void*)&chegada_esferico);
 	
+
 	//Pega o menor tempo que chegará o pedido:
 	double menor = *(double*)obter_ordenada(lista_tempo_chegada_pedidos, 0);//*(double*)obter_ordenada(lista_tempo_chegada_pedidos, 0);
 
@@ -117,11 +120,6 @@ int main(int argc, char** argv){
 
 	while(tempo_atual < atof(argv[1]))
 	{
-		printf("Lista Tempo Chegada:\n");
-		imprime_lista_ordenada(lista_tempo_chegada_pedidos);
-		printf("Lista Tempo Maquina Livre:\n");
-		imprime_lista_ordenada(lista_tempo_livre_maquinas);
-		printf("\n\n");
 		double aux1, aux2;
 
 		aux1 = *(double*)obter_ordenada(lista_tempo_chegada_pedidos,0);
@@ -567,6 +565,8 @@ int main(int argc, char** argv){
 			}
 		}
 	}
+
+	printf("Total Cilindrico: %d\nTotal Conico: %d\nTotal Aco: %d\nTotal Titanio: %d\n", total_cilindrico, total_conico, total_esferico_aco, total_esferico_titanio );
 
 	return 0;
 

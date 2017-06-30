@@ -12,13 +12,15 @@ lista* criar_lista_ordenada(int (*func)(void*,void*)){
 
 void inserir_ordenada(lista *lst, void *elem){
 	nodo *nTemp = create_nodo_ordenada(elem);
-	nodo *current = lst->ini;
+
 	if(lst->tam == 0)
 	{
 		lst->ini = lst->fim = nTemp;
 	}
 	else
 	{
+		nodo *current = lst->ini;
+
 		while((current->prox != NULL) && (lst->func(elem, current->elem)))
 		{
 			current = current->prox;
@@ -29,7 +31,7 @@ void inserir_ordenada(lista *lst, void *elem){
 			current->ant = nTemp;
 			lst->ini = nTemp;
 		}
-		else if (current->prox == NULL)
+		else if (current->prox == NULL && (lst->func(elem, current->elem)))
 		{
 			nTemp->ant = current;
 			current->prox = nTemp;
