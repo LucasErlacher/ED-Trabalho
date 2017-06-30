@@ -12,37 +12,36 @@ lista* criar_lista_ordenada(int (*func)(void*,void*)){
 
 void inserir_ordenada(lista *lst, void *elem){
 	nodo *nTemp = create_nodo_ordenada(elem);
-	nodo *current = lst->fim;
+	nodo *current = lst->ini;
 	if(lst->tam == 0)
 	{
 		lst->ini = lst->fim = nTemp;
 	}
 	else
 	{
-		while((current->ant != NULL) && !(lst->func(elem, current->elem)))
+		while((current->prox != NULL) && (lst->func(elem, current->elem)))
 		{
-			current = current->ant;
+			current = current->prox;
 		}
 		
-		if((current->prox == NULL) && (lst->func(elem, current->elem)))
-		{
-			current->prox = nTemp;
-			nTemp->ant = current;
-			lst->fim = nTemp;
-		}
-		else if((current->ant == NULL) && (lst->func(elem, current->elem)))
-		{
-			current->ant = nTemp;
+		if((current->ant == NULL) && !(lst->func(elem, current->elem))){
 			nTemp->prox = current;
+			current->ant = nTemp;
 			lst->ini = nTemp;
+		}
+		else if (current->prox == NULL)
+		{
+			nTemp->ant = current;
+			current->prox = nTemp;
+			lst->fim = nTemp;
 		}
 		else
 		{
-			(current->prox)->ant = nTemp;
-			nTemp->prox = current->prox;
+			(current->ant)->prox = nTemp;
+			nTemp->ant = current->ant;
 			
-			current->prox = nTemp;
-			nTemp->ant = current;
+			current->ant = nTemp;
+			nTemp->prox = current;
 		}
 	}
 	

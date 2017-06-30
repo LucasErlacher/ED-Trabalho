@@ -73,8 +73,7 @@ int main(int argc, char** argv){
 	
 	//Pega o menor tempo que chegará o pedido:
 	double menor = *(double*)obter_ordenada(lista_tempo_chegada_pedidos, 0);//*(double*)obter_ordenada(lista_tempo_chegada_pedidos, 0);
-	printf("%lf\n", menor);
-	exit(0);
+
 	remover_ordenada(lista_tempo_chegada_pedidos, 0);
 
 	tempo_atual = menor;
@@ -589,7 +588,7 @@ double tempoMaquina(double tempoMaquina) {
 }
 
 int compara(void *v1, void *v2){
-	if (*(double*)v1 < *(double*)v2) return 1;
+	if (*(double*)v1 > *(double*)v2) return 1;
 	else return 0;
 }
 
