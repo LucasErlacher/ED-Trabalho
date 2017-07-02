@@ -25,7 +25,7 @@ void inserir_ordenada(lista *lst, void *elem){
 		{
 			current = current->prox;
 		}
-		
+
 		if((current->ant == NULL) && !(lst->func(elem, current->elem))){
 			nTemp->prox = current;
 			current->ant = nTemp;
@@ -41,24 +41,25 @@ void inserir_ordenada(lista *lst, void *elem){
 		{
 			(current->ant)->prox = nTemp;
 			nTemp->ant = current->ant;
-			
+
 			current->ant = nTemp;
 			nTemp->prox = current;
 		}
 	}
-	
+
 	(lst->tam)++;
-	
+
 	return;
 }
 
 void remover_ordenada(lista *lst, int pos){
 	nodo *current = lst->ini;
-	
+
 	if (pos < lst->tam){
-		
-		for(int x = 0; x < pos; x++) current = current->prox;
-		
+
+		int x;
+		for(x = 0; x < pos; x++) current = current->prox;
+
 		if((pos == 0) && (lst->tam == 1))
 		{
 			lst->ini = lst->fim = NULL;
@@ -66,7 +67,7 @@ void remover_ordenada(lista *lst, int pos){
 		else if(current->prox == NULL)
 		{
 			(current->ant)->prox = NULL;
-			lst->fim = current->ant;	
+			lst->fim = current->ant;
 		}
 		else if(current->ant == NULL)
 		{
@@ -78,9 +79,9 @@ void remover_ordenada(lista *lst, int pos){
 			(current->ant)->prox = (current->prox);
 			(current->prox)->ant = (current->ant);
 		}
-		
+
 		free(current);
-	
+
 		(lst->tam)--;
 	}
 	return;
@@ -92,7 +93,8 @@ void* obter_ordenada(lista *lst, int pos){
 
 	if (pos < lst->tam)
 	{
-		for (int i = 0; i < pos; ++i) nTemp = nTemp->prox;
+	    int i;
+		for (i = 0; i < pos; ++i) nTemp = nTemp->prox;
 		elem = get_ElemNodo_ordenada(nTemp);
 	}
 
@@ -105,8 +107,9 @@ void destruir_lista_ordenada(lista *lst){
 	nodo *nTemp = lst->ini;
 	int tam = lst->tam;
 
-	for (int i = 0; i < tam; ++i)
-	{	
+	int i;
+	for (i = 0; i < tam; ++i)
+	{
 		lst->ini = nTemp->prox;
 
 		free(nTemp);

@@ -76,8 +76,13 @@ char atual_maquina(ROL *rolamento){
 }
 
 char proxima_maquina(ROL *rolamento){
+	int maquinaAtual = (rolamento->maquina_atual);
+	printf("%d %c maquina atual\n", maquinaAtual, rolamento->tipo);
 	(rolamento->maquina_atual)++;
-	char prox_maquina = (rolamento->ordemMaq)[rolamento->maquina_atual];
+
+    maquinaAtual = (rolamento->maquina_atual);
+
+	char prox_maquina = (rolamento->ordemMaq)[maquinaAtual];
 	return prox_maquina;
 }
 
