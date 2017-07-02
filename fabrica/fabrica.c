@@ -68,11 +68,8 @@ int main(int argc, char** argv){
 	
 	//Insere os pedidos na lista para ser ordenado:
 	inserir_ordenada(lista_tempo_chegada_pedidos, (void*)&chegada_cilindrico);
-	//imprime_lista_ordenada(lista_tempo_chegada_pedidos);
 	inserir_ordenada(lista_tempo_chegada_pedidos, (void*)&chegada_conico);
-	//imprime_lista_ordenada(lista_tempo_chegada_pedidos);
 	inserir_ordenada(lista_tempo_chegada_pedidos, (void*)&chegada_esferico);
-	
 
 	//Pega o menor tempo que chegará o pedido:
 	double menor = *(double*)obter_ordenada(lista_tempo_chegada_pedidos, 0);//*(double*)obter_ordenada(lista_tempo_chegada_pedidos, 0);
@@ -312,7 +309,7 @@ int main(int argc, char** argv){
 			remover_ordenada(lista_tempo_livre_maquinas, 0);
 			rolamento_atual = libera_maquina(torno2);
 			prox_maquina = proxima_maquina(rolamento_atual);
-
+			
 			if (prox_maquina == '\0')
 			{
 				char t_rolamento = pegar_tipo(rolamento_atual);
@@ -394,7 +391,7 @@ int main(int argc, char** argv){
 			remover_ordenada(lista_tempo_livre_maquinas, 0);
 			rolamento_atual = libera_maquina(fresa);
 			prox_maquina = proxima_maquina(rolamento_atual);
-
+			
 			if (prox_maquina == '\0')
 			{
 				char t_rolamento = pegar_tipo(rolamento_atual);
