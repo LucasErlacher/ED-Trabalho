@@ -6,7 +6,7 @@ typedef struct rolamento ROL;
 struct rolamento
 {
 	char tipo;
-	char ordemMaq[6];
+	char ordemMaq[7];
 
 	float tempo_torno;
 	float tempo_mandril;

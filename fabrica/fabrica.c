@@ -48,7 +48,7 @@ int main(int argc, char** argv){
 	tempo_total_esferico_aco = 0;
 	tempo_atual = 0;
 
-	double tempo_total_fabrica = 1000;//atof(argv[1]);
+	double tempo_total_fabrica = 5000;//atof(argv[1]);
 
 	printf("\tVariaveis de tempo preparadas.\n");
 
@@ -212,7 +212,7 @@ int main(int argc, char** argv){
 			rolamento_atual = libera_maquina(torno1);
 			prox_maquina = proxima_maquina(rolamento_atual);
 
-			if (atual_maquina(rolamento_atual) == '\0')
+			if (atual_maquina(rolamento_atual) == 'v')
 			{
 				char t_rolamento = pegar_tipo(rolamento_atual);
 
@@ -278,7 +278,7 @@ int main(int argc, char** argv){
 			rolamento_atual = libera_maquina(torno2);
 			prox_maquina = proxima_maquina(rolamento_atual);
 
-			if (atual_maquina(rolamento_atual) == '\0')
+			if (atual_maquina(rolamento_atual) == 'v')
 			{
 				char t_rolamento = pegar_tipo(rolamento_atual);
 
@@ -391,7 +391,7 @@ int main(int argc, char** argv){
 			rolamento_atual = libera_maquina(mandril);
 			prox_maquina = proxima_maquina(rolamento_atual);
 
-			if (atual_maquina(rolamento_atual) == '\0')//Teste prox_maq == '\0'
+			if (atual_maquina(rolamento_atual) == 'v')//Teste prox_maq == 'v'
 			{
 				char t_rolamento = pegar_tipo(rolamento_atual);
 
