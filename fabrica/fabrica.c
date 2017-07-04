@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
 
 #define CHEGADA_CILINDRICO 21.5
 #define CHEGADA_CONICO 19.1
@@ -32,6 +33,7 @@ int main(int argc, char** argv){
 	//Declarando variáveis - Contabilizam QUANTIDADE TOTAL e TEMPO TOTAL de cada tipo de rolamento:
 
     printf("Inicio do programa: \n");
+    srand(time(NULL));
 
 	int total_cilindrico, total_conico, total_esferico_aco, total_esferico_titanio;
 
@@ -48,7 +50,7 @@ int main(int argc, char** argv){
 	tempo_total_esferico_aco = 0;
 	tempo_atual = 0;
 
-	double tempo_total_fabrica = 5000;//atof(argv[1]);
+	double tempo_total_fabrica = atof(argv[1]);
 
 	printf("\tVariaveis de tempo preparadas.\n");
 
@@ -89,8 +91,6 @@ int main(int argc, char** argv){
 
 	remover_ordenada(lista_ordenada, 0);
 
-	printf("\t%.2lf tempo atual. Pedido 1 iniciado.", tempo_atual);
-
 	//Variáveis para o rolamento
 	ROL *rolamento_atual;
 	double tempoProcessamento;
@@ -103,7 +103,7 @@ int main(int argc, char** argv){
 
 	if (tempo_atual == chegada_cilindrico)
 	{
-		rolamento_atual = criar_rolamento('c'); //Cria o rolamento
+		rolamento_atual = criar_rolamento('c', tempo_atual); //Cria o rolamento
 		tempoProcessamento = pegar_tempo_torno(rolamento_atual); //Pega o tempo médio que aquele rolamento deve ficar no torno
 		inserir_maquina(torno1, rolamento_atual, tempo_atual, tempoProcessamento); //Insere na maquina especificada
 		chegada_cilindrico = chegadaPedido(CHEGADA_CILINDRICO) + tempo_atual; //Gera um novo tempo para chegar um novo cilindrico
@@ -111,7 +111,7 @@ int main(int argc, char** argv){
 		inserir_ordenada(lista_ordenada, (void*)tempo_livre(torno1)); //Insere o tempo que a máquina ficará livre na lista de tempos de máquina
 	} else if (tempo_atual == chegada_conico) //Faz o mesmo que o anterior
 	{
-		rolamento_atual = criar_rolamento('k');
+		rolamento_atual = criar_rolamento('k', tempo_atual);
 		tempoProcessamento = pegar_tempo_torno(rolamento_atual);
 		inserir_maquina(torno1, rolamento_atual, tempo_atual, tempoProcessamento);
 		chegada_conico = chegadaPedido(CHEGADA_CONICO) + tempo_atual;
@@ -119,7 +119,7 @@ int main(int argc, char** argv){
 		inserir_ordenada(lista_ordenada, (void*)tempo_livre(torno1));
 	} else //Faz o mesmo que o anterior
 	{
-		rolamento_atual = criar_rolamento('a');
+		rolamento_atual = criar_rolamento('a', tempo_atual);
 		tempoProcessamento = pegar_tempo_fresa(rolamento_atual);
 		inserir_maquina(fresa, rolamento_atual, tempo_atual, tempoProcessamento);
 		chegada_esferico = chegadaPedido(CHEGADA_ESFERICO) + tempo_atual;
@@ -131,12 +131,10 @@ int main(int argc, char** argv){
 	while(tempo_atual < tempo_total_fabrica)
 	{
 		tempo_atual = *(double*)obter_ordenada(lista_ordenada,0); //Atualiza o tempo
-        printf("%.2lf tempo atual.", tempo_atual);
-        printf("Total Cilindrico: %d Total Conico: %d Total Aco: %d Total Titanio: %d\n", total_cilindrico, total_conico, total_esferico_aco, total_esferico_titanio );
 
 		if(tempo_atual == chegada_cilindrico){
 			remover_ordenada(lista_ordenada, 0); //Remove da lista de tempos de chegada o tempo_atual tempo
-			rolamento_atual = criar_rolamento('c'); //Cria um novo rolamento
+			rolamento_atual = criar_rolamento('c', tempo_atual); //Cria um novo rolamento
 
 				if((!ocupada(torno1)) && (tamanho(fila_torno) == 0))
 				{
@@ -162,7 +160,7 @@ int main(int argc, char** argv){
 
 		} else if (tempo_atual == chegada_conico){ //Repete o mesmo procedimento que o anterior
 			remover_ordenada(lista_ordenada, 0);
-			rolamento_atual = criar_rolamento('k');
+			rolamento_atual = criar_rolamento('k', tempo_atual);
 
 				if((!ocupada(torno1)) && (tamanho(fila_torno) == 0))
 				{
@@ -187,8 +185,8 @@ int main(int argc, char** argv){
 
 		} else if (tempo_atual == chegada_esferico){ //Repete o mesmo procedimento que o anterior
 			remover_ordenada(lista_ordenada, 0);
-			if (quantidade_pedidos_esfericos % 9 == 0) rolamento_atual = criar_rolamento('t');
-			else rolamento_atual = criar_rolamento('a');
+			if (quantidade_pedidos_esfericos % 9 == 0) rolamento_atual = criar_rolamento('t', tempo_atual);
+			else rolamento_atual = criar_rolamento('a', tempo_atual);
 
 				if((!ocupada(fresa)) && (tamanho(fila_fresa) == 0))
 				{
@@ -219,18 +217,22 @@ int main(int argc, char** argv){
 				if (t_rolamento == 'c')
 				{
 					total_cilindrico++;
+					tempo_total_cilindrico += tempo_atual - pegar_tempo_inicio(rolamento_atual);
 				}
 				else if (t_rolamento == 'k')
 				{
 					total_conico++;
+					tempo_total_conico += tempo_atual - pegar_tempo_inicio(rolamento_atual);
 				}
 				else if (t_rolamento == 'a')
 				{
 					total_esferico_aco++;
+					tempo_total_esferico_aco += tempo_atual - pegar_tempo_inicio(rolamento_atual);
 				}
 				else if (t_rolamento == 't')
 				{
 					total_esferico_titanio++;
+					tempo_total_esferico_titanio += tempo_atual - pegar_tempo_inicio(rolamento_atual);
 				}
 
 				free(rolamento_atual);
@@ -459,7 +461,12 @@ int main(int argc, char** argv){
 		}
 	}
 
-	printf("Total Cilindrico: %d\nTotal Conico: %d\nTotal Aco: %d\nTotal Titanio: %d\n", total_cilindrico, total_conico, total_esferico_aco, total_esferico_titanio );
+	printf("Total Cilindrico: %d -- Tempo medio: %2f\n", total_cilindrico, (tempo_total_cilindrico/total_cilindrico));
+	printf("Total Conico: %d -- Tempo medio: %2f\n", total_conico, (tempo_total_conico/total_conico));
+	printf("Total Aco: %d -- Tempo medio: %2f\n", total_esferico_aco, (tempo_total_esferico_aco/total_esferico_aco));
+	printf("Total Titanico: %d -- Tempo medio: %2f\n", total_esferico_titanio, (tempo_total_esferico_titanio/total_esferico_titanio));
+
+
 
 	return 0;
 

@@ -47,7 +47,7 @@ void criar_esferico_titanio(ROL* rolamento){
 	return;
 }
 
-ROL* criar_rolamento(char tipo_rolamento){
+ROL* criar_rolamento(char tipo_rolamento, double tempo_atual){
 	ROL *rolamento = (ROL*) malloc(sizeof(ROL));
 
 	switch(tipo_rolamento)
@@ -68,6 +68,8 @@ ROL* criar_rolamento(char tipo_rolamento){
 			break;
 	}
 
+
+	rolamento->tempo_inicio = tempo_atual;
 	return rolamento;
 }
 
@@ -77,10 +79,10 @@ char atual_maquina(ROL *rolamento){
 
 char proxima_maquina(ROL *rolamento){
 	int maquinaAtual = (rolamento->maquina_atual);
-	printf("%d %c maquina atual\n", maquinaAtual, rolamento->tipo);
 	(rolamento->maquina_atual)++;
-
     maquinaAtual = (rolamento->maquina_atual);
+
+    if(maquinaAtual < 0 || maquinaAtual > 6) return 'v';
 
 	char prox_maquina = (rolamento->ordemMaq)[maquinaAtual];
 	return prox_maquina;
@@ -95,3 +97,5 @@ double pegar_tempo_fresa(ROL *rolamento){return rolamento->tempo_fresa;}
 char pegar_tipo(ROL* rolamento){return rolamento->tipo;}
 
 int pegar_prioridade(ROL* rolamento){return rolamento->prioridade;}
+
+double pegar_tempo_inicio(ROL *rolamento){return rolamento->tempo_inicio;}
